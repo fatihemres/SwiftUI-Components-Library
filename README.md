@@ -47,6 +47,6 @@ SwiftUIComponents/
 
 ## Notes
 
-This repository does not currently declare a reuse license. Unless a license is later added, do not assume the source can be redistributed as an open-source component package.
+The owner's original work is **proprietary, all rights reserved**, as described in [LICENSE](LICENSE). This is not an open-source component package; tutorial examples, fonts, images, and other third-party materials remain under their own rights.
 
 Components may be learning exercises or adaptations; credit and rights for any external material should be verified before reuse.
