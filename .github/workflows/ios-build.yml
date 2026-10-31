@@ -1,0 +1,55 @@
+name: SwiftUI example build
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "SwiftUIComponents/**"
+      - "SwiftUIComponents.xcodeproj/**"
+      - ".github/workflows/ios-build.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "SwiftUIComponents/**"
+      - "SwiftUIComponents.xcodeproj/**"
+      - ".github/workflows/ios-build.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: swiftui-build-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  simulator-build:
+    name: Xcode 16.4 / iOS Simulator build
+    runs-on: macos-15
+    timeout-minutes: 30
+    steps:
+      - name: Check out the source
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Select Xcode 16.4
+        run: |
+          sudo xcode-select -s /Applications/Xcode_16.4.app/Contents/Developer
+          xcodebuild -version
+
+      - name: Verify project and shared scheme
+        run: |
+          xcodebuild -list -project SwiftUIComponents.xcodeproj
+
+      - name: Build for iOS Simulator without signing
+        run: |
+          xcodebuild build \
+            -project SwiftUIComponents.xcodeproj \
+            -scheme SwiftUIComponents \
+            -configuration Debug \
+            -sdk iphonesimulator \
+            -destination "generic/platform=iOS Simulator" \
+            -derivedDataPath "${RUNNER_TEMP}/SwiftUIComponentsDerivedData" \
+            CODE_SIGNING_ALLOWED=NO
+
+# This is build-only validation; no XCTest target or physical-device test is claimed.
