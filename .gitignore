@@ -1,0 +1,14 @@
+# Local Xcode state and generated build artifacts
+**/xcuserdata/
+*.xcuserstate
+DerivedData/
+build/
+.build/
+*.hmap
+*.ipa
+*.dSYM
+*.dSYM.zip
+.DS_Store
+
+# Keep shared Xcode schemes, source assets and licensed font files tracked.
+# Existing xcuserdata already tracked by Git are unaffected by .gitignore.
